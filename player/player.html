@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Player</title>
+    <link rel="stylesheet" href="./player.css">
+    <script type="text/javascript" src="./player.js"></script>
+</head>
+
+<body>
+    <h1>player1.0</h1>
+    <h3>一款简约好看的原生JS音乐播放器</h3>
+    <div class="position">
+    <div class="code">
+        <img src="./image/HTML.png" alt="">
+        <img src="./image/JS1.png" alt="">
+        <img src="./image/JS.png" alt="">
+        <img src="./image/CSS.png" alt="">
+    </div>
+</div>
+    <div id="player">
+        <div class="player_main">
+            <div class="cover">
+                <div>
+                    <img src='./image/灌篮高手.jpg' alt=" ">
+                </div>
+                <div class="piayer_btn ">
+                    <div class="player-btn_pause ">
+                        <div></div>
+                    </div>
+                    <div class="player-btn_play ">
+                        <span class="player-btn-play-left "></span>
+                        <span class="player-btn-play-right "></span>
+                    </div>
+                </div>
+            </div>
+            <div class="control ">
+                <div class="music_name ">世界が終るまでは…</div>
+                <div class="name ">
+                    <span class="singer ">WANDS</span>
+                    <img class="player_loop " src="./image/image1.png">
+                    <img class="player_single " src="./image/image2.png">
+                </div>
+                <div class="ProgressBar ">
+                    <div class="player_line "></div>
+                    <div class="player-line_percent "></div>
+                </div>
+                <div class="player_bottom ">
+                    <div class="player_time ">
+                        <span>00:00</span>/<span>00:00</span>
+                    </div>
+                    <div class="icon ">
+                        <img src="./image/image3.png " alt=" ">
+                        <img src="./image/Snipaste_2019-10-22_11-43-26.png ">
+                    </div>
+                    <div class="volume ">
+                    </div>
+                    <div class="volume_background"></div>
+                    <div class="menu ">
+                        <img src="./image/image4.png " alt=" ">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list">
+            <p>
+                &nbsp1. WANDS - 世界が終るまでは….mp3
+            </p>
+            <p>
+                &nbsp2. 银临-棠梨煎雪.mp3
+            </p>
+        </div>
+        <audio class="audio " src="./songs/WANDS - 世界が終るまでは….mp3 " controls='controls'></audio>
+    </div>
+
+    <script>
+        var audio = document.getElementsByClassName('audio')[0]
+        var play = document.getElementsByClassName('player-btn_pause')[0]
+        var pause = document.getElementsByClassName('player-btn_play')[0]
+        var loop = document.getElementsByClassName('player_loop')[0]
+        var songName = document.getElementsByClassName('music_name')[0]
+        var backgroundImg = document.getElementsByTagName('img')[4]
+        var singer = document.getElementsByClassName('singer')[0]
+        var single = document.getElementsByClassName('player_single')[0]
+        var currentTime = document.getElementsByTagName('span')[3]
+        var totalTime = document.getElementsByTagName('span')[4]
+        var voice = document.getElementsByTagName('img')[7]
+        var muteVoice = document.getElementsByTagName('img')[8]
+        var voiceLength = document.getElementsByClassName('volume')[0]
+        var voiceBackground = document.getElementsByClassName('volume_background')[0]
+        var playLine = document.getElementsByClassName('player_line')[0]
+        var playLinePercent = document.getElementsByClassName('player-line_percent')[0]
+        var menu = document.getElementsByClassName('menu')[0]
+        var songList = document.getElementsByClassName('list')[0]
+        var song1 = document.getElementsByTagName('p')[0]
+        var song2 = document.getElementsByTagName('p')[1]
+
+        //音乐的播放和暂停
+        play.onclick = function () {
+            play.style.display = 'none'
+            pause.style.display = 'block'
+            backgroundImg.style.filter = 'blur(2px)';
+            audio.play()
+
+        }
+
+        pause.onclick = function () {
+            play.style.display = 'block'
+            pause.style.display = 'none'
+            backgroundImg.style.filter = 'blur(0px)'
+            audio.pause()
+        }
+        //切换播放模式
+        loop.onclick = function () {
+            loop.style.display = 'none'
+            single.style.display = 'block'
+            audio.loop = 'loop'
+        }
+        single.onclick = function () {
+            loop.style.display = 'block'
+            single.style.display = 'none'
+            audio.loop = ''
+        }
+        //音乐播放时间
+        setInterval(() => {
+            let minutes = parseInt(Math.floor(audio.currentTime / 60))
+            let seconds = parseInt(Math.floor(audio.currentTime % 60))
+            if (minutes < 10) {
+                minutes = '0' + minutes
+            }
+            if (seconds < 10) {
+                seconds = '0' + seconds
+            }
+            currentTime.innerText = `${minutes}:${seconds}`
+        }, 1000);
+        audio.oncanplay = function () {
+            let minutes = parseInt(Math.floor(audio.duration / 60))
+            let seconds = parseInt(Math.floor(audio.duration % 60))
+            if (minutes < 10) {
+                minutes = '0' + minutes
+            }
+            if (seconds < 10) {
+                seconds = '0' + seconds
+            }
+            totalTime.innerText = `${minutes}:${seconds}`
+        }
+        //是否静音
+        let voicePercent
+        voice.onclick = function () {
+            voice.style.display = 'none'
+            muteVoice.style.display = 'block'
+            voiceLength.style.display = 'none'
+            audio.volume = 0
+        }
+        muteVoice.onclick = function () {
+            voice.style.display = 'block'
+            muteVoice.style.display = 'none'
+            voiceLength.style.display = 'block'
+            audio.volume = (parseInt(voiceLength.style.width)) / 120 //注意点：这里是宽度，有px,使用parseInt转换成number
+
+        }
+        //改变音量大小
+
+        voiceLength.onclick = function () {
+            voicePercent = window.event.layerX / 120
+            audio.volume = voicePercent
+            voiceLength.style.width = window.event.layerX + 'px'
+        }
+        voiceBackground.onclick = function () {
+            voicePercent = window.event.layerX / 120
+            audio.volume = voicePercent
+            voiceLength.style.width = window.event.layerX + 'px'
+        }
+        //歌曲播放点击改变进度条
+        playLine.onclick = function () {
+            playLinePercent.style.width = window.event.layerX + 'px'
+            audio.currentTime = window.event.layerX * audio.duration / 250
+        }
+        playLinePercent.onclick = function () {
+            playLinePercent.style.width = window.event.layerX + 'px'
+            audio.currentTime = window.event.layerX * audio.duration / 250
+
+        }
+        //歌曲播放随时间的进度条
+        setInterval(() => {
+            playLinePercent.style.width = (audio.currentTime / audio.duration) * 250 + 'px'
+
+        }, 100);
+        //下拉列表
+        menu.onclick = function () {
+            if (songList.style.display == 'block') {
+                songList.style.display = 'none'
+            } else {
+                songList.style.display = 'block'
+            }
+        }
+        //点击播放第一首
+        song1.onclick = function () {
+            audio.src = './songs/WANDS - 世界が終るまでは….mp3'
+            play.style.display = 'none'
+            pause.style.display = 'block'
+            backgroundImg.src = './image/灌篮高手.jpg'
+
+            backgroundImg.style.filter = 'blur(2px)';
+            audio.play()
+            songName.innerText = '世界が終るまでは…'
+            singer.innerText = 'WANDS'
+        }
+        song2.onclick = function () {
+            audio.src = './songs/银临 - 棠梨煎雪.mp3'
+            play.style.display = 'none'
+            pause.style.display = 'block'
+            backgroundImg.src = './image/棠梨煎雪.jpg'
+            backgroundImg.style.filter = 'blur(2px)';
+            audio.play()
+            songName.innerText = '棠梨煎雪'
+            singer.innerText = '银临'
+        }
+    </script>
+
+</body>
+
+</html>
