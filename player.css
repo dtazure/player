@@ -210,7 +210,7 @@ h3{
   height: 14px;
   border-radius: 5px;
   background-color: #ebebf2;
-  left: 105px;
+  left: 108px;
   top: 4px;
   transition: width 0.5s;
 }
@@ -221,7 +221,7 @@ h3{
   height: 14px;
   border-radius: 5px;
   background-color: #d94240;
-  left: 105px;
+  left: 108px;
   top: 4px;
   z-index: 100;
   transition: width 0.5s;
@@ -232,6 +232,9 @@ h3{
   left: 230px;
   top: 2px;
   transition: 0.5s;
+}
+.menu:hover{
+  cursor: pointer;
 }
 .list {
   width: 365px;

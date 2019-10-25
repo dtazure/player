@@ -74,7 +74,7 @@
                 <img src="./image/CSS.png" alt="">
             </div>
         </div>
-        <audio class="audio " src="./songs/song1.mp3 " controls='controls'></audio>
+        <audio class="audio " src="./songs/song1.mp3 " controls='controls' preload="auto"></audio>
     </div>
 
     <script>
@@ -104,8 +104,18 @@
             play.style.display = 'none'
             pause.style.display = 'block'
             backgroundImg.style.filter = 'blur(2px)';
-            audio.load()
-            audio.play()
+            if ( audio.play()) {
+                audio.play().then(() => {
+                    // 音频加载成功
+                    // 音频的播放需要耗时
+                    setTimeout(() => {
+                      
+                    }, audio.duration * 1000); 
+                }).catch((e) => {
+                    
+                });
+            }
+           
 
         }
 
@@ -113,7 +123,6 @@
             play.style.display = 'block'
             pause.style.display = 'none'
             backgroundImg.style.filter = 'blur(0px)'
-            audio.load()
             audio.pause()
         }
         //切换播放模式
